@@ -4,7 +4,7 @@ Pdf Suspaudimas
 # Gui aplikacija
 
 ### Kad sukompiliuotų gui reikia pridėti ./data/ dokumnetus 
-`$ ./venv/Scripts/pyinstaller.exe --onefile --windowed -F --add-data="data/*;." guy.py`
+`$ ./venv/Scripts/pyinstaller.exe --onefile --windowed -F --add-data="data/*;." pdf_compressor.py`
 
 GS pridėtas /data/ kataloge, nereikia papildomai nieko
 

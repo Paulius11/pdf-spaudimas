@@ -1,8 +1,10 @@
 #local
 test.pdf
 suspaustas.pdf
-data/**
-!data/untitled.ui
+data/gswin32c.exe
+data/gsdll32.dll
+data/gsdll32.lib
+
 # Perso
 pdfc
 
