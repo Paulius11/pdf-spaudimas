@@ -21,11 +21,19 @@ On MacOSX install via command line `brew install ghostscript`.
 import argparse
 import subprocess
 import os.path
+
 import sys
 import shutil
 
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+cwd = os.getcwd()
+print(cwd)
+
+
 def compress(input_file_path, output_file_path, power=0):
     """Function to compress PDF via Ghostscript command line interface"""
+    # input_file_path = os.path.join(PROJECT_PATH, input_file_path_)
+    # output_file_path = os.path.join(PROJECT_PATH, output_file_path_)
     quality = {
         0: '/default',
         1: '/prepress',
@@ -48,25 +56,39 @@ def compress(input_file_path, output_file_path, power=0):
     gs = get_ghostscript_path()
     print("Compress PDF...")
     initial_size = os.path.getsize(input_file_path)
+    # https://gist.github.com/firstdoit/6390547
+    # Note that by default Ghostscript removes hyperlinks from PDFs. To preserve links, include the flag -dPrinted=false.
     subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
-                    '-dPDFSETTINGS={}'.format(quality[power]),
-                    '-dNOPAUSE', '-dQUIET', '-dBATCH',
-                    '-sOutputFile={}'.format(output_file_path),
+                     '-dPDFSETTINGS={}'.format(quality[power]),
+                     '-dNOPAUSE', '-dQUIET', '-dBATCH',
+                     '-sOutputFile={}'.format(output_file_path),
                      input_file_path]
-    )
-    final_size = os.path.getsize(output_file_path)
-    ratio = 1 - (final_size / initial_size)
+                    )
+
+    ratio = 1 - (os.path.getsize(output_file_path) / initial_size)
     print("Compression by {0:.0%}.".format(ratio))
-    print("Final file size is {0:.1f}MB".format(final_size / 1000000))
+    print("Original:    {0:.3f}MB".format(get_file_size(input_file_path)))
+    print("Converted:   {0:.3f}MB".format(get_file_size(output_file_path)))
     print("Done.")
 
 
+def get_file_size(input_file_path):
+    """Get readable filesize in MB"""
+    return os.path.getsize(input_file_path) / 1000000
+
+
 def get_ghostscript_path():
-    gs_names = ['gs', 'gswin32', 'gswin64']
-    for name in gs_names:
-        if shutil.which(name):
-            return shutil.which(name)
-    raise FileNotFoundError(f'No GhostScript executable was found on path ({"/".join(gs_names)})')
+    gs_path = os.path.join(PROJECT_PATH, "data", "gswin32c.exe")
+    if not os.path.isfile(gs_path):
+        gs_path = os.path.join(PROJECT_PATH,  "gswin32c.exe")
+    if not gs_path:
+        assert "Cant find file location"
+    return gs_path
+    # gs_names = ['data', 'gswin32', 'gswin64']
+    # for name in gs_names:
+    #     if shutil.which(name):
+    #         return shutil.which(name)
+    # raise FileNotFoundError(f'No GhostScript executable was found on path ({"/".join(gs_names)})')
 
 
 def main():
@@ -105,6 +127,7 @@ def main():
             subprocess.call(['open', args.input])
         else:
             subprocess.call(['open', args.out])
+
 
 if __name__ == '__main__':
     main()

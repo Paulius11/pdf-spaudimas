@@ -1,6 +1,13 @@
+#local
+test.pdf
+suspaustas.pdf
 # Perso
 pdfc
 
+
+./dist
+./build
+.idea/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
