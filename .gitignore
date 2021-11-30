@@ -1,8 +1,8 @@
 #local
 test.pdf
 suspaustas.pdf
-./data/
-!./data/untitled.ui
+data/**
+!data/untitled.ui
 # Perso
 pdfc
 
