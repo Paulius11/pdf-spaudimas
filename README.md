@@ -1,11 +1,14 @@
-Pdf compresorius - 
+Pdf Suspaudimas  
 =======================
 
 # Gui aplikacija
 
-### Kad sukompiliuotu reikia prideti  į pyinstaller ./data/ 
+### Kad sukompiliuotų gui reikia pridėti ./data/ dokumnetus 
 `$ ./venv/Scripts/pyinstaller.exe --onefile --windowed -F --add-data="data/*;." guy.py`
 
-Gostscriptas pridėtas, nereikia papildomai siūstis
+GS pridėtas /data/ kataloge, nereikia papildomai nieko
 
-###Gui kurtas naudojas QT designer
+Suspaudimo reikšmės, nuo 0 iki 4 nuo mažiausio iki didžiausio suspaudimo
+
+
+GUI kurtas naudojas QT designer.
