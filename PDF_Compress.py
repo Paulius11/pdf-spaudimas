@@ -29,6 +29,8 @@ class Ui(QtWidgets.QMainWindow):
         self.browse.clicked.connect(self.select_file_button_pressed)
         self.compress = self.findChild(QtWidgets.QPushButton, 'pushButton_2')  # Find the button
         self.compress.clicked.connect(self.click_button_compress)
+        self.open = self.findChild(QtWidgets.QPushButton, 'pushButton_open_file')  # Find the button
+        self.open.clicked.connect(self.open_file)
 
         self.spinbox_compress_level = self.findChild(QtWidgets.QSpinBox, 'spinBox')  # Find the button
 
@@ -36,14 +38,28 @@ class Ui(QtWidgets.QMainWindow):
         self.label_size = self.findChild(QtWidgets.QLabel, 'label_dydis')  # Find the button
         self.label_size_compressed = self.findChild(QtWidgets.QLabel, 'label_dydis_2')  # Find the button
         self.label_compressed_location = self.findChild(QtWidgets.QLabel, 'label_3')  # Find the button
+        self.check_box_grayscale = self.findChild(QtWidgets.QCheckBox, 'checkBox')  # Find the button
 
         self.show()
+
+
+
+
+    def open_file(self):
+        """Open converted file"""
+        print("click")
+        try:
+            if os.path.isfile(self.output_file):
+                os.startfile(self.output_file)
+        except AttributeError as e:
+            return
 
     def browse_file(self):
         f_name = QFileDialog.getOpenFileName(self, "Open this bad boy", application_path)
         return f_name
 
     def select_file_button_pressed(self):
+        print(f'Checkbox: {self.check_box_grayscale.isChecked()} {type(self.check_box_grayscale.isChecked())}')
         # This is executed when the button is pressed
         self.label_size_compressed.setText("")
         selected_file = self.browse_file()[0]
@@ -63,7 +79,11 @@ class Ui(QtWidgets.QMainWindow):
         print('compress pressed')
         input_file = self.selected_file
         output_file = os.path.join(application_path, "suspaustas.pdf")
-        compress(input_file, output_file, self.spinbox_compress_level.value())
+        self.output_file = output_file
+        print(f"Path {output_file}")
+        compress(input_file_path=input_file, output_file_path=output_file,
+                 power=self.spinbox_compress_level.value(),
+                 grayscale=self.check_box_grayscale.isChecked())
         self.label_size_compressed.setText("{0:.2f}MB".format(get_file_size(output_file)))
         self.label_compressed_location.setText(output_file)
 

@@ -154,7 +154,7 @@
       <x>50</x>
       <y>460</y>
       <width>721</width>
-      <height>80</height>
+      <height>89</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -176,58 +176,87 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_3">
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Suspausto failo vieta</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_open_file">
+         <property name="text">
+          <string>Atidaryti</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>180</y>
+      <width>178</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
-        <string>Suspausto failo vieta</string>
+        <string>Suspaudimo lygis 0-4:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
+       </property>
+       <property name="maximum">
+        <number>4</number>
+       </property>
+       <property name="value">
+        <number>3</number>
        </property>
       </widget>
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QCheckBox" name="checkBox">
     <property name="geometry">
      <rect>
       <x>610</x>
-      <y>330</y>
-      <width>151</width>
-      <height>111</height>
+      <y>340</y>
+      <width>121</width>
+      <height>21</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
+    <property name="text">
+     <string>Nespalvotai</string>
     </property>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>20</y>
-       <width>158</width>
-       <height>50</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Suspaudimo lygis 0-4:</string>
-     </property>
-    </widget>
-    <widget class="QSpinBox" name="spinBox">
-     <property name="geometry">
-      <rect>
-       <x>50</x>
-       <y>70</y>
-       <width>41</width>
-       <height>22</height>
-      </rect>
-     </property>
-     <property name="maximum">
-      <number>4</number>
-     </property>
-     <property name="value">
-      <number>3</number>
-     </property>
-    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

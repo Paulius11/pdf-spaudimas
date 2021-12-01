@@ -30,10 +30,17 @@ cwd = os.getcwd()
 print(cwd)
 
 
-def compress(input_file_path, output_file_path, power=0):
+def compress(input_file_path, output_file_path, power=0, grayscale=False):
     """Function to compress PDF via Ghostscript command line interface"""
     # input_file_path = os.path.join(PROJECT_PATH, input_file_path_)
     # output_file_path = os.path.join(PROJECT_PATH, output_file_path_)
+
+    # /default selects output intended to be useful across a wide variety of uses, possibly at the expense of a larger output file.
+    # /prepress selects output similar to Acrobat Distiller "Prepress Optimized" setting.
+    # /printer selects output similar to the Acrobat Distiller "Print Optimized" setting.
+    # /ebook selects medium-resolution output similar to the Acrobat Distiller "eBook" setting.
+    # /screen selects low-resolution output similar to the Acrobat Distiller "Screen Optimized" setting.
+
     quality = {
         0: '/default',
         1: '/prepress',
@@ -58,12 +65,26 @@ def compress(input_file_path, output_file_path, power=0):
     initial_size = os.path.getsize(input_file_path)
     # https://gist.github.com/firstdoit/6390547
     # Note that by default Ghostscript removes hyperlinks from PDFs. To preserve links, include the flag -dPrinted=false.
-    subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
-                     '-dPDFSETTINGS={}'.format(quality[power]),
-                     '-dNOPAUSE', '-dQUIET', '-dBATCH',
-                     '-sOutputFile={}'.format(output_file_path),
-                     input_file_path]
-                    )
+    if grayscale:
+        print("Compresing graystyle")
+
+        subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
+                         '-dPDFSETTINGS={}'.format(quality[power]),
+                         '-dNOPAUSE', '-dQUIET', '-dBATCH',
+                         '-dColorConversionStrategy=/Gray',
+                         '-dProcessColorModel=/DeviceGray',
+                         '-sOutputFile={}'.format(output_file_path),
+                         input_file_path]
+                        )
+    else:
+        print("Compresing normal")
+
+        subprocess.call([gs, '-sDEVICE=pdfwrite', '-dCompatibilityLevel=1.4',
+                         '-dPDFSETTINGS={}'.format(quality[power]),
+                         '-dNOPAUSE', '-dQUIET', '-dBATCH',
+                         '-sOutputFile={}'.format(output_file_path),
+                         input_file_path]
+                        )
 
     ratio = 1 - (os.path.getsize(output_file_path) / initial_size)
     print("Compression by {0:.0%}.".format(ratio))
